@@ -21,7 +21,7 @@ export const UserItem = ({ username, imageUrl, isLive }: userItemProps) => {
 
   const { collapsed } = useSidebar((state) => state);
 
-  const href = `\${username}`;
+  const href = `/${username}`;
   const isActive = pathname === href;
 
   return (
