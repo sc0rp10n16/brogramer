@@ -14,8 +14,26 @@ model User {
     imageUrl String @db.Text
     externalUserId String @unique
     bio String? @db.Text
+    wingman Follow[] @relation("Wingman")
+    wingmanBy Follow[] @relation("WingmanBy")
     firstName String @db.Text
     lastName String @db.Text
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    }
+
+model Follow {
+    id String @id @default(uuid())
+    broId String
+    wingmanId String
+
+    bro User @relation(name: "Wingman", fields: [broId], references: [id], onDelete: Cascade)
+    wingman User @relation(name: "WingmanBy", fields: [wingmanId], references: [id], onDelete: Cascade )
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@unique([broId, wingmanId])
+    @@index([broId])
+    @@index([wingmanId])
   }
